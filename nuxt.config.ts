@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  modules: ["@nuxt/ui", "@nuxtjs/supabase", "@nuxt/eslint"],
+  modules: ["@nuxt/ui", "@nuxtjs/supabase", "@nuxt/eslint", "@nuxt/fonts"],
   css: ["~/assets/css/main.css"],
   supabase: {
     url: process.env.SUPABASE_URL,
@@ -12,5 +12,17 @@ export default defineNuxtConfig({
       callback: "/confirm",
       exclude: ["/api/*"],
     },
+  },
+  fonts: {
+    defaults: {
+      weights: [400],
+      styles: ["normal", "italic"],
+      subsets: ["latin-ext", "latin"],
+    },
+    families: [
+      { name: "Montserrat", provider: "google" },
+      { name: "Roboto", provider: "google" },
+      { name: "Poppins", provider: "google" },
+    ],
   },
 });

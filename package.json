@@ -12,6 +12,7 @@
     "format": "prettier --write \"{components,pages,plugins,middleware,layouts,composables,assets}/**/*.{js,jsx,ts,tsx,vue,html,css,scss,json,md}\""
   },
   "dependencies": {
+    "@nuxt/fonts": "latest",
     "@nuxt/ui": "next",
     "@nuxtjs/supabase": "latest",
     "nuxt": "^3.14.159",
