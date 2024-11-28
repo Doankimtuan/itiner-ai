@@ -27,41 +27,79 @@
 
     <!-- Search Bar -->
     <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-full max-w-5xl">
-      <UCard class="p-4">
+      <UCard class="p-4 bg-white/40 border-none shadow-lg">
         <div class="flex items-center gap-4">
-          <USelect
-            v-model="hotelType"
-            :options="['飯店']"
-            placeholder="飯店"
-            class="w-40"
-          />
-          <UInput
-            placeholder="輸入目的地、飯店名稱....."
+          <UInputMenu
+            v-model="selectedCity"
+            :items="filteredCities"
+            :loading="isLoadingSearchCity"
+            placeholder="Choose a city"
             icon="i-heroicons-magnifying-glass"
             class="flex-grow"
+            @input="searchCities"
           />
-          <UDatePicker v-model="checkIn" placeholder="Check-in" class="w-40" />
+          <UDatePicker
+            v-model="checkIn"
+            placeholder="Check-in"
+            :initial-value="new Date('2019-06-19')"
+            class="w-40"
+          />
           <UDatePicker
             v-model="checkOut"
             placeholder="Check-out"
+            :initial-value="new Date('2019-06-24')"
             class="w-40"
           />
           <USelect
             v-model="guests"
             :options="['4 adults']"
+            icon="i-heroicons-user-group"
             placeholder="Guests"
             class="w-40"
           />
-          <UButton color="orange" variant="solid" label="搜尋" class="px-8" />
+          <UButton
+            color="primary"
+            variant="solid"
+            label="搜尋"
+            class="px-8 bg-orange-400 hover:bg-orange-500"
+          />
         </div>
       </UCard>
     </div>
   </div>
 </template>
 
-<script setup>
-const hotelType = ref("飯店");
-const checkIn = ref(null);
-const checkOut = ref(null);
-const guests = ref("4 adults");
+<script setup lang="ts">
+import { useSearchCity } from "~/hooks/useSearchCity";
+import type { ICity } from "~/types/home";
+
+const selectedCity = ref<ICity | undefined>(undefined);
+const cities = ref<ICity[]>([]);
+const { mutate: searchCity, isPending: isLoadingSearchCity } = useSearchCity({
+  handleSuccess: handleSearchSuccess,
+});
+
+const filteredCities = computed<ICity[]>(() => {
+  console.log("==========", cities.value);
+  return cities.value.map((city) => ({
+    name: city.name,
+    country: city.country,
+  }));
+});
+
+async function handleSearchSuccess(data: unknown) {
+  console.log("========== data", data);
+}
+
+async function searchCities(query: { target: { value: string } }) {
+  if (!query || query.target.value.length < 2) {
+    cities.value = [];
+    return;
+  }
+  searchCity(query.target.value);
+}
+
+const checkIn = ref<Date>(new Date("2019-06-19"));
+const checkOut = ref<Date>(new Date("2019-06-24"));
+const guests = ref<string>("4 adults");
 </script>
