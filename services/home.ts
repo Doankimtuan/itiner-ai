@@ -1,11 +1,14 @@
-export const searchCity = async (city: string) => {
+export const getCity = async (textSearch: string) => {
+  const query = {
+    search: textSearch,
+    page: "1",
+    size: "10",
+  };
+  const params = new URLSearchParams(query);
+
   const response = await $fetch(
-    `https://countriesnow.space/api/v0.1/countries/population/cities`,
-    {
-      method: "POST",
-      body: JSON.stringify({ city }),
-    },
+    `https://api.thecompaniesapi.com/v2/locations/cities?${params}`
   );
-  const data = response as { data: unknown };
-  return data.data;
+
+  return response;
 };

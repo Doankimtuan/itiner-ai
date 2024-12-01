@@ -1,15 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
+
   modules: [
     "@nuxt/ui",
-    "@nuxtjs/supabase",
-    "@nuxt/eslint",
     "@nuxt/fonts",
-    "@nuxtjs/tailwindcss",
+    "@nuxt/eslint",
+    "@nuxtjs/supabase",
+    "@pinia/nuxt",
   ],
-  css: ["~/assets/css/main.css"],
+
   supabase: {
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_KEY,
@@ -19,6 +19,7 @@ export default defineNuxtConfig({
       exclude: ["/api/*"],
     },
   },
+
   fonts: {
     defaults: {
       weights: [400],
@@ -31,4 +32,6 @@ export default defineNuxtConfig({
       { name: "Poppins", provider: "google" },
     ],
   },
+
+  compatibilityDate: "2024-11-30",
 });

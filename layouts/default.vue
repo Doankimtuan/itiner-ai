@@ -68,4 +68,29 @@ const navigationItems = [
 .router-link-active {
   @apply font-medium;
 }
+
+@media (max-width: 640px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .flex.items-center.gap-6 {
+    flex-direction: column;
+    gap: 2;
+  }
+
+  .flex.items-center.gap-4 {
+    flex-direction: column;
+    gap: 2;
+  }
+
+  header {
+    padding: 1rem;
+  }
+
+  footer {
+    text-align: center;
+  }
+}
 </style>
